@@ -78,7 +78,7 @@ def hello():
         
         print "DEBUG ::: received vote : " + vote
         # todo: add other elements here
-        data = json.dumps({'voter_id': voter_id, 'vote': vote, 'user_agent':request.headers.get('User-Agent'), 'user_address':request.remote_addr, 'port':'80', 'last_visit':json.dumps(datetime.datetime.now())})
+        data = json.dumps({'voter_id': voter_id, 'vote': vote, 'user_agent':request.headers.get('User-Agent'), 'user_address':request.remote_addr, 'port':'80', 'last_visit':str(datetime.datetime.now())})
         redis.rpush('votes', data)
 
     resp = make_response(render_template(
