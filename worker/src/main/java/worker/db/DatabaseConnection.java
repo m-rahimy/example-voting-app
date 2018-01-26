@@ -179,6 +179,26 @@ public class DatabaseConnection {
                         "   END; \n" +
                         "$$ LANGUAGE plpgsql; \n" +
 
+                        "CREATE OR REPLACE FUNCTION fetch_votes_for_voter(id TEXT) \n" +
+                        "\tRETURNS TABLE(voteID INTEGER, voterID VARCHAR(36), voterName VARCHAR(36), candidateID INTEGER, firstVoted VARCHAR(20), lastChange VARCHAR(20) , changesCount INTEGER) AS $$ \n" +
+                        "    BEGIN      \n" +
+                        "\tRETURN QUERY            \n" +
+                        "\t\tSELECT         \n" +
+                        "\t\t\tvoting.id AS voteID,      \n" +
+                        "\t\t\tpeople.id AS voterID,            \n" +
+                        "                        people.full_name AS voterName,\n" +
+                        "\t\t\tcandidate_id AS candidateID,   \n" +
+                        "\t\t\tfirst_voted AS firstVoted,           \n" +
+                        "\t\t\tlast_change AS lastChange,           \n" +
+                        "\t\t\tchanges_count AS changesCount           \n" +
+                        "\t\tFROM              \n" +
+                        "\t\t\tvoting \n" +
+                        "                JOIN candidate ON voting.candidate_id=candidate.id\n" +
+                        "\t\tJOIN people ON voter_id = people.id\n" +
+                        "\t\tWHERE candidate.id = $1; \n" +
+                        "   END; \n" +
+                        "$$ LANGUAGE plpgsql; "+
+
                         "INSERT INTO candidate (name, opponent_id) values ('iOS','1'); \n" +
                         "INSERT INTO candidate (name, opponent_id) values ('Android','1'); \n" +
                         "UPDATE candidate SET opponent_id=2 WHERE id=1; \n" +

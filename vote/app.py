@@ -21,24 +21,29 @@ def init_db():
           print "DEBUG ::: psycopg2.connect error: {0} ".format(err)
           time.sleep(1)
     cursor = conn.cursor()
-    #cursor.execute("SELECT 1;")
-    #print cursor.fetchone()
-    #cursor.execute("SELECT * FROM people;")
-    #print cursor.fetchone()
-    #sql = "SELECT candidate.id AS op1ID, candidate.name AS op1Name, A.id AS op2ID, A.name AS op2Name                                   FROM                                      candidate A                                   JOIN candidate                                   ON candidate.id = A.opponent_id                                WHERE candidate.id < A.id;"
+    return cursor
+
+def get_all_options(cursor):
     sql = "SELECT * FROM fetch_candidates()"
     cursor.execute(sql)
     row = cursor.fetchone()
-    print "fetching candidates"
     opts = []
     while row is not None:
         opt = [{'id':row[0], 'name':row[1]}, { 'id': row[2] , 'name':row[3] }]
         print "opt: {0} " .format(opt)
         opts.append(opt)
         row = cursor.fetchone()
-    print "closing the cursor"
-    cursor.close()
-    print "DEBUG ::: Connected! "
+    return opts
+
+def get_all_votes(cursor, _id):
+    sql = "SELECT * FROM fetch_votes_for_voter(%s)"
+    cursor.execute(sql, _id)
+    row = cursor.fetchone()
+    opts = []
+    while row is not None:
+        opt = [{'vid':row[0], 'voter_id':row[1] , 'voter_name': row[2] , 'candidate_id':row[3], 'first_voted':row[4],  'last_change':row[5],  'change_count':row[6]    }]
+        opts.append(opt)
+        row = cursor.fetchone()
     return opts
 
 # TODO: WE NEED TO add database key for these array
@@ -65,7 +70,9 @@ def hello():
     #todo: fetch all votes from this person and make a response
 
     vote = None
-    options = init_db();
+    cursor = init_db();
+    options = get_all_options(cursor)
+    current_votes = get_all_votes(cursor, voter_id)
     if request.method == 'POST':
         redis = get_redis()
         vote = request.form['vote']
@@ -85,6 +92,7 @@ def hello():
         'index.html',
         options=options,
         hostname=hostname,
+        votes=current_votes,
         vote=vote,
     ))
     resp.set_cookie('voter_id', voter_id)
