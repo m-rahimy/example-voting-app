@@ -14,11 +14,13 @@
     <div id="content-container">
       <div id="content-container-center">
 	      {% for option in options %}
+	      {% set id1 = 'candidate_{0}'.format(option[0].id) %}
+		  {% set id2 = 'candidate_{0}'.format(option[1].id) %}
 	<hr style="width:50%">
         <h3>{{option[0].name}} vs {{option[1].name}}!</h3>
         <form id="choice" name='form' method="POST" action="/">
-		<button id="candidate_{{option[0].id}}" type="submit" name="vote" class="a" value="candidate_{{option[0].id}}">{{option[0].name}}</button>
-		<button id="candidate_{{option[1].id}}" type="submit" name="vote" class="b" value="candidate_{{option[1].id}}">{{option[1].name}}</button>
+		<button id="{{id1}}" type="submit" name="vote" class="a" value="{{id1}}">{{option[0].name}}</button>
+		<button id="{{id2}}" type="submit" name="vote" class="b" value="{{id2}}">{{option[1].name}}</button>
         </form>
 	{% endfor %}
 
@@ -40,11 +42,11 @@
         $(".a").html('{{option_a}} <i class="fa fa-check-circle"></i>');
         $(".b").css('opacity','0.5');
      // }
-      //if(vote == "b"){
+      /*if(vote == "b"){
         $(".b").prop('disabled', true);
         $(".b").html('{{option_b}} <i class="fa fa-check-circle"></i>');
         $(".a").css('opacity','0.5');
-     // }
+     */ }
     </script>
     {% endif %}
   </body>
