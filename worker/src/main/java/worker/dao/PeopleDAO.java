@@ -67,7 +67,8 @@ public class PeopleDAO {
             }
             return true;
         } catch (SQLException e) {
-            System.err.println("Java Worker : Caught SQL Exception: ");
+            System.err.println("Java Worker : Caught SQL Exception: Updating People ");
+            update(people);
             e.printStackTrace();
         }
 
