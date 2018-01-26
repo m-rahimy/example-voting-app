@@ -1,4 +1,4 @@
-version: "3"
+version: "2.0"
 
 services:
   vote:
@@ -11,6 +11,10 @@ services:
     networks:
       - front-tier
       - back-tier
+    environment:
+      - POSTGRES_PASSWORD=theCamelsHateUs
+      - SAMPLE_1 = "s1"
+      - SAMPLE_2 = "s2"
 
   result:
     build: ./result
@@ -45,6 +49,9 @@ services:
       - "db-data:/var/lib/postgresql/data"
     networks:
       - back-tier
+    environment:
+      -  POSTGRES_PASSWORD=theCamelsHateUs
+    command: -p 5432
 
 volumes:
   db-data:

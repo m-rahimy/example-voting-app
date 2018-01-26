@@ -27,8 +27,7 @@ services:
   worker:
     build:
       context: ./worker
-    depends_on:
-      - "redis"
+      dockerfile: Dockerfile.j
     networks:
       - back-tier
 
@@ -40,10 +39,16 @@ services:
       - back-tier
 
   db:
-    image: postgres:9.4
+    image: mysql:5.7
     container_name: db
+    restart: always
+    environment:
+            MYSQL_ROOT_PASSWORD: WeShallThis
+            MYSQL_DATABASE: voting_app
+            MYSQL_USER: vincent
+            MYSQL_PASSWORD: AllInFountainPen
     volumes:
-      - "db-data:/var/lib/postgresql/data"
+      - "db-data:/var/lib/mysql"
     networks:
       - back-tier
 

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>{{option_a}} vs {{option_b}}!</title>
+    <title>This vs That!</title>
     <base href="/index.html">
     <meta name = "viewport" content = "width=device-width, initial-scale = 1.0">
     <meta name="keywords" content="docker-compose, docker, stack">
@@ -13,16 +13,17 @@
   <body>
     <div id="content-container">
       <div id="content-container-center">
-        <h3>{{option_a}} vs {{option_b}}!</h3>
+	      {% for option in options %}
+	<hr style="width:50%">
+        <h3>{{option[0].name}} vs {{option[1].name}}!</h3>
         <form id="choice" name='form' method="POST" action="/">
-          <button id="a" type="submit" name="vote" class="a" value="a">{{option_a}}</button>
-          <button id="b" type="submit" name="vote" class="b" value="b">{{option_b}}</button>
+		<button id="candidate_{{option[0].id}}" type="submit" name="vote" class="a" value="candidate_{{option[0].id}}">{{option[0].name}}</button>
+		<button id="candidate_{{option[1].id}}" type="submit" name="vote" class="b" value="candidate_{{option[1].id}}">{{option[1].name}}</button>
         </form>
+	{% endfor %}
+
         <div id="tip">
           (Tip: you can change your vote)
-        </div>
-        <div id="hostname">
-          Processed by container ID {{hostname}}
         </div>
       </div>
     </div>
@@ -32,17 +33,18 @@
     {% if vote %}
     <script>
       var vote = "{{vote}}";
-
-      if(vote == "a"){
+      console.log("vote = " + vote);
+      
+      //if(vote == "a"){
         $(".a").prop('disabled', true);
         $(".a").html('{{option_a}} <i class="fa fa-check-circle"></i>');
         $(".b").css('opacity','0.5');
-      }
-      if(vote == "b"){
+     // }
+      //if(vote == "b"){
         $(".b").prop('disabled', true);
         $(".b").html('{{option_b}} <i class="fa fa-check-circle"></i>');
         $(".a").css('opacity','0.5');
-      }
+     // }
     </script>
     {% endif %}
   </body>

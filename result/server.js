@@ -1,6 +1,7 @@
 var express = require('express'),
     async = require('async'),
     pg = require("pg"),
+    //mysql = require('mysql'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
@@ -40,6 +41,7 @@ async.retry(
   }
 );
 
+// TODO: fetch with a call query. pass data to the view
 function getVotes(client) {
   client.query('SELECT vote, COUNT(id) AS count FROM votes GROUP BY vote', [], function(err, result) {
     if (err) {
@@ -81,5 +83,5 @@ app.get('/', function (req, res) {
 
 server.listen(port, function () {
   var port = server.address().port;
-  console.log('App running on port ' + port);
+  console.log('(server.js) App running on port ' + port);
 });
