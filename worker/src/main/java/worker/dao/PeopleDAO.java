@@ -118,7 +118,7 @@ public class PeopleDAO {
                                     "remote_address=?, " +
                                     "remote_port=?, " +
                                     "first_visit=?, " +
-                                    "last_visit=?, " +
+                                    "last_visit=? " +
                                     "WHERE id=?; "
                     );
 
