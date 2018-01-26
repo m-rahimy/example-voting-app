@@ -4,3 +4,9 @@ bin/
 obj/
 *.iml
 java-worker/
+worker/src/Worker/
+result/server.js.mysql.bad
+s (copy).sql
+s.sql
+vote/Dockerfile.orig
+
