@@ -160,7 +160,6 @@ public class DatabaseConnection {
                         "  END; \n" +
                         "END $$; \n" +
 
-                        "DROP FUNCTION IF EXISTS fetch_candidates;"+
                         "CREATE OR REPLACE FUNCTION fetch_candidates() \n" +
                         "RETURNS TABLE(op1ID INTEGER, op1Name VARCHAR(20), op2ID INTEGER, op2Name VARCHAR(20)) AS $$ \n" +
                         "    BEGIN      \n" +
