@@ -36,8 +36,8 @@ def get_all_options(cursor):
     return opts
 
 def get_all_votes(cursor, _id):
-    sql = "SELECT * FROM fetch_votes_for_voter(%s)"
-    cursor.execute(sql, _id)
+    sql = "SELECT * FROM fetch_votes_for_voter('{0}')".format(_id)
+    cursor.execute(sql)
     row = cursor.fetchone()
     opts = []
     while row is not None:

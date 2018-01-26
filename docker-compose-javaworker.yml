@@ -46,6 +46,7 @@ services:
     image: postgres:9.4
     container_name: db
     volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - "db-data:/var/lib/postgresql/data"
     networks:
       - back-tier
