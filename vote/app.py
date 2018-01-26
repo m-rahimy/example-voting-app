@@ -20,7 +20,7 @@ def init_db():
           print "DEBUG ::: psycopg2.connect error: {0} ".format(err)
           time.sleep(1)
     cursor = conn.cursor()
-    cursor.callproc("fetch_candidates")
+    cursor.execute("SELECT * FROM fetch_candidates();")
     #cursor.execute("SELECT               candidate.name AS op1,               A.name AS op2           FROM               candidate A           JOIN               candidate           ON               candidate.id = A.opponent_id        WHERE candidate.id < A.id;")
     row = cursor.fetchone()
     print "fetching candidates"
