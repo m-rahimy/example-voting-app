@@ -10,7 +10,7 @@ import random
 import json
 
 def init_db():
-    connection_string = "host='db' dbname='postgres' user='postgres' password='theCamelsHateUs port=5858' "
+    connection_string = "host='db' dbname='postgres' user='postgres' password='theCamelsHateUs'"
     print "DEBUG ::: Connecting to database\n    ->%s" % (connection_string)
     while True:
       try:
@@ -24,8 +24,8 @@ def init_db():
     #print cursor.fetchone()
     #cursor.execute("SELECT * FROM people;")
     #print cursor.fetchone()
-    sql = "SELECT candidate.id AS op1ID, candidate.name AS op1Name, A.id AS op2ID, A.name AS op2Name                                   FROM                                      candidate A                                   JOIN candidate                                   ON candidate.id = A.opponent_id                                WHERE candidate.id < A.id;"
-    #sql = "SELECT * FROM fetch_candidates()"
+    #sql = "SELECT candidate.id AS op1ID, candidate.name AS op1Name, A.id AS op2ID, A.name AS op2Name                                   FROM                                      candidate A                                   JOIN candidate                                   ON candidate.id = A.opponent_id                                WHERE candidate.id < A.id;"
+    sql = "SELECT * FROM fetch_candidates()"
     cursor.execute(sql)
     row = cursor.fetchone()
     print "fetching candidates"

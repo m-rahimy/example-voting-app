@@ -68,15 +68,16 @@ public class DatabaseConnection {
 
             Class.forName("org.postgresql.Driver");
             String url = "jdbc:postgresql://" + // base
-                    "db" + // database name? or host?
-                    "/postgres"; // database name?
+                    "db" + // host name alias
+                    "/postgres"; // database name
 
             while (databaseConnection == null) {
                 try {
-                    databaseConnection = DriverManager.getConnection(url, "postgres", "");
+                    databaseConnection = DriverManager.getConnection(url, "postgres", "theCamelsHateUs");
                 } catch (SQLException e) {
-                    System.err.println("Waiting for db");
-                    ThreadUtils.sleep(1000);
+                    long s = 1000;
+                    System.err.println("Error in init, Waiting for db in " + s + " ms");
+                    ThreadUtils.sleep(s);
                 }
             }
 
@@ -88,12 +89,12 @@ public class DatabaseConnection {
         }
 
         isConnected = true;
-        /*if (!isTablesInitialized) */
-        try {
-            initTables(databaseConnection);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        if (!isTablesInitialized)
+            try {
+                initTables(databaseConnection);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
         System.err.println("Connected to db");
         return true;
