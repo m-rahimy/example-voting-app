@@ -10,7 +10,7 @@ import java.sql.*;
 
 class Worker {
     public static void main(String[] args) {
-        System.out.println("Starting Java Worker - Modified ");
+        System.out.println("Starting Java Worker - Modified By Local");
 
         //try {
         Jedis redis = DatabaseConnection.getInstance().connectToRedis("redis");
