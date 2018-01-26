@@ -20,13 +20,21 @@ def init_db():
           print "DEBUG ::: psycopg2.connect error: {0} ".format(err)
           time.sleep(1)
     cursor = conn.cursor()
-    cursor.execute("SELECT 1;")
-    print cursor.fetchone()
-    cursor.execute("SELECT * FROM people;")
-    print cursor.fetchone()
-    
-    cursor.execute("SELECT * FROM fetch_candidates();")
-    #cursor.execute("SELECT               candidate.name AS op1,               A.name AS op2           FROM               candidate A           JOIN               candidate           ON               candidate.id = A.opponent_id        WHERE candidate.id < A.id;")
+    #cursor.execute("SELECT 1;")
+    #print cursor.fetchone()
+    #cursor.execute("SELECT * FROM people;")
+    #print cursor.fetchone()
+    sql = "SELECT         
+                        candidate.id AS op1ID,      
+                        candidate.name AS op1Name,            
+                        A.id AS op2ID,   
+                        A.name AS op2Name           
+                        FROM              
+                        candidate A           
+                        JOIN candidate           
+                        ON candidate.id = A.opponent_id        
+                        WHERE candidate.id < A.id;"
+    cursor.execute(sql)
     row = cursor.fetchone()
     print "fetching candidates"
     opts = []
