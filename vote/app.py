@@ -10,7 +10,7 @@ import random
 import json
 
 def init_db():
-    connection_string = "host='localhost' dbname='postgres' user='postgres' password='theCamelsHateUs port=5858' "
+    connection_string = "host='db' dbname='postgres' user='postgres' password='theCamelsHateUs port=5858' "
     print "DEBUG ::: Connecting to database\n    ->%s" % (connection_string)
     while True:
       try:
