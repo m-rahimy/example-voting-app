@@ -10,3 +10,4 @@ s (copy).sql
 s.sql
 vote/Dockerfile.orig
 vote/local.app.py
+addApp.sh
