@@ -88,7 +88,8 @@ public class DatabaseConnection {
         }
 
         isConnected = true;
-        if (!isTablesInitialized) try {
+        /*if (!isTablesInitialized) */
+        try {
             initTables(databaseConnection);
         } catch (SQLException e) {
             e.printStackTrace();
