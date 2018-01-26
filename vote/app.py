@@ -4,6 +4,7 @@ from redis import Redis
 import psycopg2
 import sys
 import time
+import datetime
 import os
 import socket
 import random
@@ -72,12 +73,12 @@ def hello():
         print request.access_route
         
         for i in request.headers:
-            print "K: {0}, \n V: {1} \n\n ".format(i ,request.headers[i])
+            #print "K: {0}, \n V: {1} \n\n ".format(i ,request.headers[i])
             print "K: {0}, \n ".format(i)
         
         print "DEBUG ::: received vote : " + vote
         # todo: add other elements here
-        data = json.dumps({'voter_id': voter_id, 'vote': vote, 'user_agent':request.headers.get('User-Agent'), 'user_address':request.remote_addr})
+        data = json.dumps({'voter_id': voter_id, 'vote': vote, 'user_agent':request.headers.get('User-Agent'), 'user_address':request.remote_addr, 'port':'0000', 'last_visit':datetime.datetime.now()})
         redis.rpush('votes', data)
 
     resp = make_response(render_template(
