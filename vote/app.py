@@ -45,8 +45,7 @@ name = 'name'
 _id = 'id'
 #options =[[{_id:1,name:"Cats"}, {_id:2, name:"Dogs"}] , [{_id:3,name:"Apple"}, {_id:4,name:"Android"}] , [{_id:5,name:"Pepsi"}, {_id:6,name:"Coca Cola"}], [{_id:7,name:"Blue Pen"}, {_id:8,name:"Black Pen"}], [{_id:9,name:"Regular Pen"},{_id:10,name:"Fountain Pen"}], [{_id:11,name:"Pencil"},{_id:12,name:"Mechanical Pencil"}] ]
 
-options = init_db();
-print options
+#print options
 
 hostname = socket.gethostname()
 
@@ -62,9 +61,10 @@ def hello():
     voter_id = request.cookies.get('voter_id')
     if not voter_id:
         voter_id = hex(random.getrandbits(64))[2:-1]
+    #todo: fetch all votes from this person and make a response
 
     vote = None
-
+    options = init_db();
     if request.method == 'POST':
         redis = get_redis()
         vote = request.form['vote']
@@ -72,12 +72,12 @@ def hello():
         print request.access_route
         
         for i in request.headers:
-            #print "K: {0}, \n V: {1} \n\n ".format(i ,request.headers[i])
+            print "K: {0}, \n V: {1} \n\n ".format(i ,request.headers[i])
             print "K: {0}, \n ".format(i)
         
         print "DEBUG ::: received vote : " + vote
         # todo: add other elements here
-        data = json.dumps({'voter_id': voter_id, 'vote': vote})
+        data = json.dumps({'voter_id': voter_id, 'vote': vote, 'user_agent':request.headers.get('User-Agent'), 'user_address':request.remote_addr})
         redis.rpush('votes', data)
 
     resp = make_response(render_template(
